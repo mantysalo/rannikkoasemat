@@ -1,0 +1,18 @@
+<title>Merisää</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css" href="/static/main.css" />
+<body>
+  <h1>{{name}}</h1>
+  {{#if time}}
+    <p>Time of observation: {{time}}</p>
+  {{/if}}
+  {{#if temperature}}
+    <p>Temperature: {{temperature}}&deg; C</p>
+  {{/if}}
+  {{#if wind_speed}}
+    <p>Wind speed: {{wind_speed}} m/s</p>
+  {{/if}}
+  {{#if wind_gust_speed}}
+    <p>Gust speed: {{wind_gust_speed}} m/s</p>
+  {{/if}}
+</body>
