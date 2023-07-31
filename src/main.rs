@@ -103,6 +103,11 @@ async fn fetch_xml(
     reqwest_client: &State<ClientWithMiddleware>,
 ) -> ReqwestResult<String> {
     println!("Fetching weather data for {}", weather_station_location);
+    let utc: DateTime<Utc> = Utc::now();
+    let utc_minus_1_hour = utc - chrono::Duration::hours(1);
+    // Format as 2021-05-01T12:00:00Z
+    let formatted_time = utc_minus_1_hour.format("%Y-%m-%dT%H:%M:%SZ");
+    let url = format!("{}&starttime={}", url, formatted_time);
     let response = reqwest_client.get(url).send().await?;
     let body = response.text().await?;
     Ok(body)
