@@ -5,61 +5,263 @@ pub mod stations {
         pub display_name: String,
         pub url: String,
     }
-    const WEATHER_STATIONS: [(&str, &str, i32); 50] = [
-        ("rajakari", "Turku Rajakari", 100947),
-        ("haapasaari", "Kotka Haapasaari", 101042),
-        ("rankki", "Kotka Rankki", 101030),
-        ("orrengrund", "Loviisa Orrengrund", 101039),
-        ("kilpilahti_satama", "Porvoo Kilpilahti satama", 100683),
-        ("emasalo", "Porvoo Emäsalo", 101023),
-        ("kalbadagrund", "Porvoo Kalbådagrund", 101022),
-        ("vuosaari_satama", "Helsinki Vuosaari satama", 151028),
-        ("itatoukki", "Sipoo Itätoukki", 105392),
-        ("harmaja", "Helsinki Harmaja", 100996),
-        ("helsinki_majakka", "Helsinki Helsingin Majakka", 101003),
-        ("makiluoto", "Kirkkonummi Mäkiluoto", 100997),
-        ("bogaskar", "Inkoo Bågaskär", 100969),
-        ("jussaro", "Raasepori Jussarö", 100965),
-        ("tulliniemi", "Hanko Tulliniemi", 100946),
-        ("russaro", "Hanko Russarö", 100932),
-        ("vano", "Kemiönsaari Vänö", 100945),
-        ("uto", "Parainen Utö", 100908),
-        ("bogskar", "Kökar Bogskär", 100921),
-        ("fagerholm", "Parainen Fagerholm", 100924),
-        ("kirkonkyla", "Kumlinge kirkonkylä", 100928),
-        ("langnas_satama", "Lumparland Långnäs satama", 151048),
-        ("lansi_satama", "Maarianhamina Länsisatama", 151029),
-        ("lotsberget", "Maarianhamina Lotsberget", 107383),
-        ("nyhamn", "Lemland Nyhamn", 100909),
-        ("market", "Hammarland Märket", 100919),
-        ("isokari", "Kustavi Isokari", 101059),
-        ("kylmapihlaja", "Rauma Kylmäpihlaja", 101061),
-        ("tahkoluoto_satama", "Pori Tahkoluoto satama", 101267),
-        (
-            "kristiinankaupunki_majakka",
-            "Kristiinankaupunki Majakka",
-            101268,
-        ),
-        ("salgrund", "Kaskinen Sälgrund", 101256),
-        ("bredskaret", "Korsnäs Bredskäret", 101479),
-        ("strommingsbadan", "Maalahti Strömmingsbådan", 101481),
-        ("valassaaret", "Mustalahti Valassaaret", 101464),
-        ("kallan", "Pietarsaari Kallan", 101660),
-        ("tankar", "Kokkola Tankar", 101661),
-        ("ulkokalla", "Kalajoki Ulkokalla", 101673),
-        ("nahkiainen", "Raahe Nahkiainen", 101775),
-        ("lapaluoto_satama", "Raahe Lapaluoto satama", 101785),
-        ("vihresaari_satama", "Oulu Vihreäsaari satama", 101794),
-        ("marjaniemi", "Hailuoto Marjaniemi", 101784),
-        ("kemi_majakka", "Kemi I Majakka", 101783),
-        ("ajos", "Kemi Ajos", 101846),
-        ("pulkkilanharju", "Asikkala Pulkkilanharju", 101185),
-        ("judinsalo", "Luhanka Judinsalo", 101362),
-        ("hiekkapakka", "Lappeenranta Hiekkapakka", 101252),
-        ("rukkasluoto", "Rantasalmi Rukkasluoto", 101436),
-        ("tuiskavanluoto", "Liperi Tuiskavanluoto", 101628),
-        ("ritoniemi", "Kuopio Ritoniemi", 101580),
-        ("seitalaassa", "Inari Seitalaassa", 129963),
+
+    struct WeatherStation {
+        id: &'static str,
+        display_name: &'static str,
+        fmis_id: i32,
+    }
+    const WEATHER_STATIONS: [WeatherStation; 50] = [
+        WeatherStation {
+            id: "rajakari",
+            display_name: "Turku Rajakari",
+            fmis_id: 100947,
+        },
+        WeatherStation {
+            id: "haapasaari",
+            display_name: "Kotka Haapasaari",
+            fmis_id: 101042,
+        },
+        WeatherStation {
+            id: "rankki",
+            display_name: "Kotka Rankki",
+            fmis_id: 101030,
+        },
+        WeatherStation {
+            id: "orrengrund",
+            display_name: "Loviisa Orrengrund",
+            fmis_id: 101039,
+        },
+        WeatherStation {
+            id: "kilpilahti_satama",
+            display_name: "Porvoo Kilpilahti satama",
+            fmis_id: 100683,
+        },
+        WeatherStation {
+            id: "emasalo",
+            display_name: "Porvoo Emäsalo",
+            fmis_id: 101023,
+        },
+        WeatherStation {
+            id: "kalbadagrund",
+            display_name: "Porvoo Kalbådagrund",
+            fmis_id: 101022,
+        },
+        WeatherStation {
+            id: "vuosaari_satama",
+            display_name: "Helsinki Vuosaari satama",
+            fmis_id: 151028,
+        },
+        WeatherStation {
+            id: "itatoukki",
+            display_name: "Sipoo Itätoukki",
+            fmis_id: 105392,
+        },
+        WeatherStation {
+            id: "harmaja",
+            display_name: "Helsinki Harmaja",
+            fmis_id: 100996,
+        },
+        WeatherStation {
+            id: "helsinki_majakka",
+            display_name: "Helsinki Helsingin Majakka",
+            fmis_id: 101003,
+        },
+        WeatherStation {
+            id: "makiluoto",
+            display_name: "Kirkkonummi Mäkiluoto",
+            fmis_id: 100997,
+        },
+        WeatherStation {
+            id: "bogaskar",
+            display_name: "Inkoo Bågaskär",
+            fmis_id: 100969,
+        },
+        WeatherStation {
+            id: "jussaro",
+            display_name: "Raasepori Jussarö",
+            fmis_id: 100965,
+        },
+        WeatherStation {
+            id: "tulliniemi",
+            display_name: "Hanko Tulliniemi",
+            fmis_id: 100946,
+        },
+        WeatherStation {
+            id: "russaro",
+            display_name: "Hanko Russarö",
+            fmis_id: 100932,
+        },
+        WeatherStation {
+            id: "vano",
+            display_name: "Kemiönsaari Vänö",
+            fmis_id: 100945,
+        },
+        WeatherStation {
+            id: "uto",
+            display_name: "Parainen Utö",
+            fmis_id: 100908,
+        },
+        WeatherStation {
+            id: "bogskar",
+            display_name: "Kökar Bogskär",
+            fmis_id: 100921,
+        },
+        WeatherStation {
+            id: "fagerholm",
+            display_name: "Parainen Fagerholm",
+            fmis_id: 100924,
+        },
+        WeatherStation {
+            id: "kirkonkyla",
+            display_name: "Kumlinge kirkonkylä",
+            fmis_id: 100928,
+        },
+        WeatherStation {
+            id: "langnas_satama",
+            display_name: "Lumparland Långnäs satama",
+            fmis_id: 151048,
+        },
+        WeatherStation {
+            id: "lansi_satama",
+            display_name: "Maarianhamina Länsisatama",
+            fmis_id: 151029,
+        },
+        WeatherStation {
+            id: "lotsberget",
+            display_name: "Maarianhamina Lotsberget",
+            fmis_id: 107383,
+        },
+        WeatherStation {
+            id: "nyhamn",
+            display_name: "Lemland Nyhamn",
+            fmis_id: 100909,
+        },
+        WeatherStation {
+            id: "market",
+            display_name: "Hammarland Märket",
+            fmis_id: 100919,
+        },
+        WeatherStation {
+            id: "isokari",
+            display_name: "Kustavi Isokari",
+            fmis_id: 101059,
+        },
+        WeatherStation {
+            id: "kylmapihlaja",
+            display_name: "Rauma Kylmäpihlaja",
+            fmis_id: 101061,
+        },
+        WeatherStation {
+            id: "tahkoluoto_satama",
+            display_name: "Pori Tahkoluoto satama",
+            fmis_id: 101267,
+        },
+        WeatherStation {
+            id: "kristiinankaupunki_majakka",
+            display_name: "Kristiinankaupunki Majakka",
+            fmis_id: 101268,
+        },
+        WeatherStation {
+            id: "salgrund",
+            display_name: "Kaskinen Sälgrund",
+            fmis_id: 101256,
+        },
+        WeatherStation {
+            id: "bredskaret",
+            display_name: "Korsnäs Bredskäret",
+            fmis_id: 101479,
+        },
+        WeatherStation {
+            id: "strommingsbadan",
+            display_name: "Maalahti Strömmingsbådan",
+            fmis_id: 101481,
+        },
+        WeatherStation {
+            id: "valassaaret",
+            display_name: "Mustalahti Valassaaret",
+            fmis_id: 101464,
+        },
+        WeatherStation {
+            id: "kallan",
+            display_name: "Pietarsaari Kallan",
+            fmis_id: 101660,
+        },
+        WeatherStation {
+            id: "tankar",
+            display_name: "Kokkola Tankar",
+            fmis_id: 101661,
+        },
+        WeatherStation {
+            id: "ulkokalla",
+            display_name: "Kalajoki Ulkokalla",
+            fmis_id: 101673,
+        },
+        WeatherStation {
+            id: "nahkiainen",
+            display_name: "Raahe Nahkiainen",
+            fmis_id: 101775,
+        },
+        WeatherStation {
+            id: "lapaluoto_satama",
+            display_name: "Raahe Lapaluoto satama",
+            fmis_id: 101785,
+        },
+        WeatherStation {
+            id: "vihresaari_satama",
+            display_name: "Oulu Vihreäsaari satama",
+            fmis_id: 101794,
+        },
+        WeatherStation {
+            id: "marjaniemi",
+            display_name: "Hailuoto Marjaniemi",
+            fmis_id: 101784,
+        },
+        WeatherStation {
+            id: "kemi_majakka",
+            display_name: "Kemi I Majakka",
+            fmis_id: 101783,
+        },
+        WeatherStation {
+            id: "ajos",
+            display_name: "Kemi Ajos",
+            fmis_id: 101846,
+        },
+        WeatherStation {
+            id: "pulkkilanharju",
+            display_name: "Asikkala Pulkkilanharju",
+            fmis_id: 101185,
+        },
+        WeatherStation {
+            id: "judinsalo",
+            display_name: "Luhanka Judinsalo",
+            fmis_id: 101362,
+        },
+        WeatherStation {
+            id: "hiekkapakka",
+            display_name: "Lappeenranta Hiekkapakka",
+            fmis_id: 101252,
+        },
+        WeatherStation {
+            id: "rukkasluoto",
+            display_name: "Rantasalmi Rukkasluoto",
+            fmis_id: 101436,
+        },
+        WeatherStation {
+            id: "tuiskavanluoto",
+            display_name: "Liperi Tuiskavanluoto",
+            fmis_id: 101628,
+        },
+        WeatherStation {
+            id: "ritoniemi",
+            display_name: "Kuopio Ritoniemi",
+            fmis_id: 101580,
+        },
+        WeatherStation {
+            id: "seitalaassa",
+            display_name: "Inari Seitalaassa",
+            fmis_id: 129963,
+        },
     ];
     pub fn create_station_hashmap() -> HashMap<String, WeatherLocation> {
         let urls = {
@@ -71,7 +273,13 @@ pub mod stations {
             }
             WEATHER_STATIONS
                 .iter()
-                .map(|(key, name, id)| (key.to_string(), create_entry(name, *id)))
+                .map(
+                    |WeatherStation {
+                         display_name,
+                         fmis_id,
+                         id,
+                     }| (id.to_string(), create_entry(display_name, *fmis_id)),
+                )
                 .collect()
         };
         urls
